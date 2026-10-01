@@ -1,0 +1,290 @@
+EXPLICACIÓN GENERAL DEL SISTEMA CONECTAAPI
+
+ConectaAPI es un sistema orientado a la gestión y seguimiento del proceso API, funcionando como un BPM académico. 
+Su objetivo principal es controlar el avance de cada sección API, administrar sus etapas, documentos, versiones, visitas y alertas, 
+permitiendo mantener trazabilidad del proceso completo.
+
+El sistema gira principalmente alrededor del modelo APISection, que representa una sección concreta de una asignatura API en una sede, 
+carrera y semestre determinados. Cada sección API pasa por un flujo de etapas definido, donde cada etapa tiene responsables, fechas límite, 
+documentos asociados y estados de avance.
+
+
+ESTRUCTURA GENERAL DEL SISTEMA
+
+    Sede
+    ↓
+    Carrera disponible en esa sede
+    ↓
+    Asignatura API
+    ↓
+    Semestre
+    ↓
+    Sección API
+    ↓
+    Etapas del proceso
+    ↓
+    Documentos
+    ↓
+    Versiones de documentos
+    ↓
+    Alertas y visitas
+
+
+EXPLICACIÓN DE CADA MODELO
+
+TimeStampedModel: Modelo base abstracto que agrega automáticamente fecha de creación y fecha de actualización a los modelos que lo heredan.
+
+User: Representa a cada usuario del sistema y define su rol dentro del proceso API, como administrador, director académico, director de 
+carrera, CTP, DVCM o coordinador API.
+
+Campus: Representa una sede institucional donde se desarrollan y gestionan las asignaturas API.
+
+UserCampus: Relaciona usuarios con sedes, permitiendo definir qué sedes puede ver o gestionar cada usuario.
+
+Career: Representa una carrera institucional como catálogo general, evitando repetir la misma carrera por cada sede.
+
+CampusCareer: Relaciona una carrera con una sede específica, indicando que esa carrera se imparte o está disponible en dicha sede.
+
+Course: Representa una asignatura API que participa en el modelo de Aprendizaje Integrado al Sector Productivo.
+
+Semester: Representa un período académico institucional, como Otoño 2026 o Primavera 2026, permitiendo agrupar las 
+secciones por semestre.
+
+ProductivePartner: Representa una empresa o socio productivo asociado al proceso API, incluyendo datos de contacto, 
+estado y quién lo propuso.
+
+APISection: Representa la sección API concreta que se gestiona en una sede, carrera, asignatura y semestre determinados. 
+Es la entidad principal del sistema.
+
+ProcessStage: Representa una etapa del flujo API dentro de una sección, permitiendo controlar responsables, estado, orden, 
+fecha límite y avance.
+
+Document: Representa una ficha o documento asociado a una etapa del proceso. Puede ser Excel, Word, PDF, ZIP u otro formato, 
+y su aprobación permite continuar con el flujo.
+
+DocumentVersion: Representa las versiones históricas de un documento, almacenando los archivos subidos y permitiendo mantener 
+trazabilidad de cambios.
+
+Visit: Representa una visita asociada a una sección API. Se usa principalmente como referencia para seguimiento y calendario, 
+ya que la gestión principal puede realizarse en otro sistema.
+
+Alert: Representa una alerta o notificación generada por documentos pendientes, etapas vencidas, visitas faltantes, retrasos 
+o falta de aprobación.
+
+
+FLUJO ACADÉMICO DEL SISTEMA
+
+    Campus
+        ↓
+    CampusCareer
+        ↓
+    APISection
+
+    Career
+        ↓
+    CampusCareer
+        ↓
+    APISection
+
+    Course
+        ↓
+    APISection
+
+    Semester
+        ↓
+    APISection
+
+    ProductivePartner
+        ↓
+    APISection
+
+    APISection
+        ↓
+    ProcessStage
+        ↓
+    Document
+        ↓
+    DocumentVersion
+
+    APISection
+        ↓
+    Visit
+
+    APISection
+        ↓
+    Alert
+
+    ProcessStage
+        ↓
+    Alert
+
+
+FLUJO DEL PROCESO API
+
+Director de Carrera (DC): Define los requisitos y características que debe cumplir la empresa según la asignatura API.
+↓
+Director de Vinculación con el Medio (DVCM): Revisa los requisitos y propone una o más empresas que cumplan con lo solicitado.
+↓
+Director de Carrera (DC): Evalúa las empresas propuestas y selecciona la contraparte más adecuada.
+↓
+Docente Especialista: Analiza la contraparte seleccionada y elabora una propuesta de proyecto.
+↓
+Director de Carrera (DC): Revisa la propuesta y decide si se aprueba, se rechaza o requiere modificaciones.
+↓
+Coordinador Técnico Pedagógico (CTP): Revisa la documentación asociada al proyecto y valida la ficha correspondiente.
+↓
+Seguimiento del Proyecto: Se realiza el seguimiento del avance y se registran las visitas correspondientes.
+↓
+Registro de Visitas: Se registran las tres visitas obligatorias como referencia para el calendario y control del proceso.
+↓
+Entrega del Proyecto Final: Se presenta el resultado final desarrollado para el socio productivo.
+↓
+Acta de Cierre: Se formaliza el cierre del proceso mediante el documento final correspondiente.
+↓
+Proceso API Finalizado
+
+
+FUNCIONAMIENTO DEL AVANCE
+
+Cada APISection posee varias etapas en ProcessStage.
+
+El avance de una sección se calcula según el estado de sus etapas.
+
+Por ejemplo:
+Si una sección tiene 6 etapas y 3 están finalizadas, su avance es de 50%.
+
+Las etapas pueden tener estados como:
+- Pendiente
+- En proceso
+- Aprobada
+- Rechazada
+- Retrasada
+- Finalizada
+
+La sección API puede tener estados generales como:
+- Activa
+- En proceso
+- Retrasada
+- Finalizada
+- Suspendida
+
+
+FUNCIONAMIENTO DE DOCUMENTOS
+
+Cada etapa puede tener uno o varios documentos asociados.
+
+Los documentos funcionan como fichas o evidencias necesarias para validar una etapa.
+
+Ejemplo:
+ProcessStage: Propuesta de proyecto
+            ↓
+Document: Ficha de propuesta.xlsx
+            ↓
+DocumentVersion: versión 1, versión 2, versión final
+
+Si un documento obligatorio no está aprobado, la etapa no debería avanzar.
+
+DocumentVersion permite conservar historial en caso de que el archivo sea corregido o reemplazado.
+
+
+FUNCIONAMIENTO DE ALERTAS
+
+Las alertas se generan cuando ocurre una situación importante dentro del proceso.
+
+Ejemplos:
+- Documento pendiente.
+- Etapa vencida.
+- Visita sin registrar.
+- Evaluación no realizada.
+- Retraso en una etapa.
+- Falta de aprobación.
+
+Las alertas pueden tener niveles:
+- Verde
+- Amarillo
+- Rojo
+
+Estas alertas permiten avisar a los usuarios antes o después de una fecha límite.
+
+
+FUNCIONAMIENTO DEL CALENDARIO
+
+El calendario no necesita un modelo propio por ahora.
+
+Puede alimentarse desde las fechas ya existentes en otros modelos:
+
+ProcessStage.due_date:
+Fecha límite de una etapa.
+
+Document.delivery_due_date:
+Fecha límite para entregar un documento.
+
+Document.review_due_date:
+Fecha límite para revisar un documento.
+
+Visit.scheduled_date:
+Fecha programada de una visita.
+
+De esta forma, el calendario muestra fechas importantes sin duplicar información.
+
+
+DIAGRAMA DE FLUJO GENERAL DEL MODELO
+
+User
+↓
+UserCampus
+↓
+Campus
+
+Campus
+↓
+CampusCareer
+↓
+APISection
+
+Career
+↓
+CampusCareer
+↓
+APISection
+
+Course
+↓
+APISection
+
+Semester
+↓
+APISection
+
+ProductivePartner
+↓
+APISection
+
+APISection
+↓
+ProcessStage
+↓
+Document
+↓
+DocumentVersion
+
+APISection
+↓
+Visit
+
+APISection
+↓
+Alert
+
+ProcessStage
+↓
+Alert
+
+
+RESUMEN FINAL
+
+El models.py de ConectaAPI representa un sistema BPM académico donde la entidad principal es APISection. Cada sección API pertenece a una sede, carrera, asignatura y semestre, 
+y avanza mediante etapas controladas por ProcessStage. Cada etapa puede tener documentos asociados, los cuales pueden versionarse mediante DocumentVersion. Las visitas se 
+registran como apoyo al calendario y las alertas permiten controlar retrasos o incumplimientos. En conjunto, el sistema permite gestionar el flujo completo del proceso API de 
+forma ordenada, trazable y escalable.
+

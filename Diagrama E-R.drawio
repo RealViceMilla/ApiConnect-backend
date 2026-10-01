@@ -1,0 +1,98 @@
+<mxfile host="65bd71144e">
+    <diagram id="conectaapi-er" name="ConectaAPI">
+        <mxGraphModel dx="1096" dy="846" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="User" value="User" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="40" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="Campus" value="Campus" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="240" y="40" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="UserCampus" value="UserCampus" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="140" y="140" width="140" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="Career" value="Career" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="440" y="40" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="CampusCareer" value="CampusCareer" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="340" y="140" width="140" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="Course" value="Course" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="520" y="140" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="Semester" value="Semester" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="680" y="140" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="ProductivePartner" value="ProductivePartner" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="840" y="140" width="160" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="APISection" value="APISection" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="280" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ProcessStage" value="ProcessStage" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="420" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Document" value="Document" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="340" y="560" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="DocumentVersion" value="DocumentVersion" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="330" y="680" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Visit" value="Visit" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="340" y="430" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Alert" value="Alert" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="780" y="560" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1" parent="1" source="User" target="UserCampus" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2" parent="1" source="Campus" target="UserCampus" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3" parent="1" source="Campus" target="CampusCareer" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e4" parent="1" source="Career" target="CampusCareer" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e5" style="entryX=0;entryY=0;entryDx=0;entryDy=0;" parent="1" source="CampusCareer" target="APISection" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e6" style="entryX=0.25;entryY=0;entryDx=0;entryDy=0;" parent="1" source="Course" target="APISection" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e7" parent="1" source="Semester" target="APISection" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e8" parent="1" source="ProductivePartner" target="APISection" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e9" parent="1" source="APISection" target="ProcessStage" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e10" parent="1" source="ProcessStage" target="Document" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e11" parent="1" source="Document" target="DocumentVersion" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e12" style="exitX=0;exitY=1;exitDx=0;exitDy=0;" parent="1" source="APISection" target="Visit" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="470" y="430"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e13" style="exitX=1;exitY=1;exitDx=0;exitDy=0;" parent="1" source="APISection" target="Alert" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e14" parent="1" source="ProcessStage" target="Alert" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

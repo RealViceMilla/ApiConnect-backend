@@ -1,0 +1,15 @@
+# Variables sensibles locales.
+.env
+
+# Artefactos generados por Python.
+*.pyc
+__pycache__/
+
+# Archivos subidos o generados localmente.
+private_media/
+media/
+db.sqlite3
+
+# Entornos virtuales locales.
+venv/
+.venv/
